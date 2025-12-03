@@ -41,14 +41,10 @@ fn generate_deck() -> Vec<String> {
     //initializing deck
     let mut deck: Vec<String> = Vec::new();
 
-    loop {
+    while deck.len() < 7 {
         //adding a single card
         deck.push(pull_card());
 
-        //break out and return deck once its full
-        if deck.len() >= 7 {
-            break;
-        }
     }
     return deck;
 }
