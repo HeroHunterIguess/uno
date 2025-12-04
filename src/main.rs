@@ -42,6 +42,18 @@ fn generate_deck() -> Vec<String> {
     return deck;
 }
 
+fn does_card_match(card_1: String, card_2: String) -> bool {
+    //check if colors match
+    if card_1.chars().nth(0) == card_2.chars().nth(0) {
+        return true;
+    
+    //check if numbers match
+    } else if card_1.chars().nth(1) == card_2.chars().nth(1) {
+        return true;
+    }
+    return false;
+}
+
 /*------------------------------*\
 : starting main game
 \*------------------------------*/
