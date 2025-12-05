@@ -15,7 +15,26 @@ const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 : defining essential functions   
 \*------------------------------*/
 
-//pulling a single card
+fn card_ascii(card: &str) {
+    let color = card.chars().nth(0).unwrap();
+    let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
+    println!("/-------\\ \n
+              |{num}      |\n
+              |       |\n
+              |   {color}   |\n
+              |       |\n
+              |      {num}|\n
+              \\-------/");
+}
+
+fn display_player_deck(deck: &Vec<String>) {
+    let mut count = 0;
+    while count <= 7 {
+        card_ascii(deck[count].as_str());
+        count += 1;
+    }
+}
+
 fn pull_card() -> String {
     //initialize rng and list the card gets made in
     let mut rng = rand::thread_rng();
@@ -30,8 +49,6 @@ fn pull_card() -> String {
     return card;
 }
 
-
-//generating a deck
 fn generate_deck() -> Vec<String> {
     //initializing and creating deck
     let mut deck: Vec<String> = Vec::new();
@@ -42,7 +59,7 @@ fn generate_deck() -> Vec<String> {
     return deck;
 }
 
-fn does_card_match(card_1: String, card_2: String) -> bool {
+fn does_card_match(card_1: &String, card_2: &String) -> bool {
     //check if colors match
     if card_1.chars().nth(0) == card_2.chars().nth(0) {
         return true;
@@ -63,11 +80,27 @@ fn main() {
     let player1_deck = generate_deck();
     let player2_deck = generate_deck();
 
-    println!("player 1s deck: {:?}",player1_deck);
-    println!("player 2s deck: {:?}",player2_deck);
+    let turn = 1;
 
     //setup the stack of cards with a random card on top
     let card_on_stack = pull_card();
-    println!("{card_on_stack}");
+    
 
+    loop {
+        //set variables for the current card on the stacks color and number
+        
+
+        //print out info for the player
+        println!("This is the card on the stack: ");
+        card_ascii(card_on_stack.as_str());
+
+        println!("\n\nIt is player {turn}'s turn!");
+        println!("\nYour deck is: \n{:?}",player1_deck);
+
+        display_player_deck(&player1_deck);
+        
+
+        break;
+
+    }
 }
