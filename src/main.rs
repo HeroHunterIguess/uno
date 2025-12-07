@@ -2,6 +2,9 @@
 : uno-like game
 : created by: Hero
 : 
+: this is a MAJOR work in progress !!
+: its not playable right now !!
+: 
 : some of this code prob isnt good im bad at rust 
 \*------------------------------------------------*/
 
@@ -37,7 +40,7 @@ fn card_ascii(card: &str) {
 \\-------/");
 }
 
-fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str) {
+fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
     //setup variables necessary to display and have info about the card
     let mut cards_left = deck.len();
     let mut current_card = 0;
@@ -46,6 +49,7 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
     while cards_left > 0 {
         let (color, num) = get_card_info(&deck[current_card]);
         
+        //print out that type of line with the info it needs
         if line_type == "num" && info_placement == "left" {
             print!("|{num}      | ");
         } else if line_type == "num" && info_placement == "right" {
@@ -75,13 +79,13 @@ fn display_player_deck(deck: &Vec<String>) {
     //loop and display ascii for every card in the deck
     while card_rows > 0 { 
         
-        display_line_of_cards(deck, "top", "");
-        display_line_of_cards(deck, "num", "left");
-        display_line_of_cards(deck, "none", "");
-        display_line_of_cards(deck, "color", "");
-        display_line_of_cards(deck, "none", "");
-        display_line_of_cards(deck, "num", "right");
-        display_line_of_cards(deck, "bottom", "");
+        display_line_of_cards(deck, "top", "", card_rows as u8);
+        display_line_of_cards(deck, "num", "left", card_rows as u8);
+        display_line_of_cards(deck, "none", "", card_rows as u8);
+        display_line_of_cards(deck, "color", "", card_rows as u8);
+        display_line_of_cards(deck, "none", "", card_rows as u8);
+        display_line_of_cards(deck, "num", "right", card_rows as u8);
+        display_line_of_cards(deck, "bottom", "", card_rows as u8);
         card_rows -= 1;
     }
 }
@@ -139,6 +143,10 @@ fn main() {
 
     loop {
 
+        /*------------------------------*\
+        : displaying info for the player
+        \*------------------------------*/
+
         //print out info for the player
         println!("This is the card on the stack: ");
         card_ascii(card_on_stack.as_str());
@@ -152,7 +160,8 @@ fn main() {
         //display players deck
         println!("\nYour deck is:");
         display_player_deck(&player1_deck);
-        
+
+        //temporarily ending the loop so it doesnt spam w/ info
         break;
 
     }
