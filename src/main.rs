@@ -15,6 +15,13 @@ const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 : defining essential functions   
 \*------------------------------*/
 
+fn get_card_info(card: &str) -> (char, char) {
+    //get color and number of current card
+    let color = card.chars().nth(0).unwrap();
+    let num = card.chars().nth(1).unwrap();
+    return (color, num);
+}
+
 fn card_ascii(card: &str) {
     //setup variables for the color and number based on the card
     let color = card.chars().nth(0).unwrap();
@@ -30,14 +37,30 @@ fn card_ascii(card: &str) {
 }
 
 fn display_player_deck(deck: &Vec<String>) {
-    let mut card_rows = deck.len().div_ceil(5);
-    let mut cards_left = deck.len();
+    let mut card_rows = deck.len().div_ceil(8);   // 1
+    let mut cards_left = deck.len();              // 7
+
+    let (color, num) = get_card_info(&deck[cards_left-1]);
     //loop and display ascii for every card in the deck
-    while card_rows >= 0 && cards_left >= 1{
+    while card_rows > 0 { 
         
-        
-        
-        cards_left -= 1;
+        while cards_left > 0 {
+            print!("/-------\\ ");
+            cards_left -= 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        while cards_left > 0 { 
+            
+            print!("|{num}      | ");
+            //print!("|       |");
+            //print!("|   {color}   |");
+            //print!("|       |");
+            //print!("|      {num}|");
+            //print!("\\-------/");
+            cards_left -= 1; 
+        }
+        card_rows -= 1
     }
 }
 
