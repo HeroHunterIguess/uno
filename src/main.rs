@@ -26,6 +26,7 @@ fn card_ascii(card: &str) {
     //setup variables for the color and number based on the card
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
+
     //print out a card
     println!("/-------\\ 
 |{num}      |
@@ -36,70 +37,52 @@ fn card_ascii(card: &str) {
 \\-------/");
 }
 
-fn display_line_of_cards(deck: Vec<String>, line_to_print: String) {
+fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str) {
+    //setup variables necessary to display and have info about the card
+    let mut cards_left = deck.len();
+    let mut current_card = 0;
 
+    //loop while there are cards remaining until 8 have been printed
+    while cards_left > 0 {
+        let (color, num) = get_card_info(&deck[current_card]);
+        
+        if line_type == "num" && info_placement == "left" {
+            print!("|{num}      | ");
+        } else if line_type == "num" && info_placement == "right" {
+            print!("|      {num}| ");
+        } else if line_type == "color" {
+            print!("|   {color}   | ");
+        } else if line_type == "none" {
+            print!("|       | ");
+        } else if line_type == "top" {
+            print!("/-------\\ ");
+        } else if line_type == "bottom" {
+            print!("\\-------/ ");
+        }
+
+        cards_left -= 1;
+        current_card += 1;
+        if current_card >= 8 {
+            break;
+        }
+    }
+    print!("\n");
 }
 
 fn display_player_deck(deck: &Vec<String>) {
-    let mut card_rows = deck.len().div_ceil(8);   // 1
-    let mut cards_left = deck.len();              // 7
-    let mut current_card = 0;
+    let mut card_rows = deck.len().div_ceil(8);
 
-    let (color, num) = get_card_info(&deck[current_card]);
     //loop and display ascii for every card in the deck
     while card_rows > 0 { 
         
-        while cards_left > 0 {
-            print!("/-------\\ ");
-            cards_left -= 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        let mut current_card = 0;
-        while cards_left > 0 {
-            let (_color, num) = get_card_info(&deck[current_card]);
-            print!("|{num}      | ");
-            cards_left -= 1;
-            current_card += 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        while cards_left > 0 {
-            print!("|       | ");
-            cards_left -= 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        let mut current_card = 0;
-        while cards_left > 0 {
-            let (color, _num) = get_card_info(&deck[current_card]);
-            print!("|   {color}   | ");
-            cards_left -= 1;
-            current_card += 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        while cards_left > 0 {
-            print!("|       | ");
-            cards_left -= 1;
-            current_card += 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        let mut current_card = 0;
-        while cards_left > 0 {
-            let (_color, num) = get_card_info(&deck[current_card]);
-            print!("|      {num}| ");
-            cards_left -= 1;
-            current_card += 1;
-        }
-        println!("");
-        let mut cards_left = deck.len();
-        while cards_left > 0 {
-            print!("\\-------/ ");
-            cards_left -= 1;
-        }
-        card_rows -= 1
+        display_line_of_cards(deck, "top", "");
+        display_line_of_cards(deck, "num", "left");
+        display_line_of_cards(deck, "none", "");
+        display_line_of_cards(deck, "color", "");
+        display_line_of_cards(deck, "none", "");
+        display_line_of_cards(deck, "num", "right");
+        display_line_of_cards(deck, "bottom", "");
+        card_rows -= 1;
     }
 }
 
@@ -121,6 +104,7 @@ fn generate_deck() -> Vec<String> {
     //initializing and creating deck
     let mut deck: Vec<String> = Vec::new();
     while deck.len() < 7 {
+
         //adding a single card
         deck.push(pull_card());
     }
