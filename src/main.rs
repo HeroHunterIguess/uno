@@ -16,22 +16,28 @@ const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 \*------------------------------*/
 
 fn card_ascii(card: &str) {
+    //setup variables for the color and number based on the card
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
-    println!("/-------\\ \n
-              |{num}      |\n
-              |       |\n
-              |   {color}   |\n
-              |       |\n
-              |      {num}|\n
-              \\-------/");
+    //print out a card
+    println!("/-------\\ 
+|{num}      |
+|       |
+|   {color}   |
+|       |
+|      {num}|
+\\-------/");
 }
 
 fn display_player_deck(deck: &Vec<String>) {
-    let mut count = 0;
-    while count <= 7 {
-        card_ascii(deck[count].as_str());
-        count += 1;
+    let mut card_rows = deck.len().div_ceil(5);
+    let mut cards_left = deck.len();
+    //loop and display ascii for every card in the deck
+    while card_rows >= 0 && cards_left >= 1{
+        
+        
+        
+        cards_left -= 1;
     }
 }
 
@@ -84,11 +90,8 @@ fn main() {
 
     //setup the stack of cards with a random card on top
     let card_on_stack = pull_card();
-    
 
     loop {
-        //set variables for the current card on the stacks color and number
-        
 
         //print out info for the player
         println!("This is the card on the stack: ");
@@ -99,7 +102,6 @@ fn main() {
 
         display_player_deck(&player1_deck);
         
-
         break;
 
     }
