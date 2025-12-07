@@ -36,11 +36,16 @@ fn card_ascii(card: &str) {
 \\-------/");
 }
 
+fn display_line_of_cards(deck: Vec<String>, line_to_print: String) {
+
+}
+
 fn display_player_deck(deck: &Vec<String>) {
     let mut card_rows = deck.len().div_ceil(8);   // 1
     let mut cards_left = deck.len();              // 7
+    let mut current_card = 0;
 
-    let (color, num) = get_card_info(&deck[cards_left-1]);
+    let (color, num) = get_card_info(&deck[current_card]);
     //loop and display ascii for every card in the deck
     while card_rows > 0 { 
         
@@ -50,15 +55,49 @@ fn display_player_deck(deck: &Vec<String>) {
         }
         println!("");
         let mut cards_left = deck.len();
-        while cards_left > 0 { 
-            
+        let mut current_card = 0;
+        while cards_left > 0 {
+            let (_color, num) = get_card_info(&deck[current_card]);
             print!("|{num}      | ");
-            //print!("|       |");
-            //print!("|   {color}   |");
-            //print!("|       |");
-            //print!("|      {num}|");
-            //print!("\\-------/");
-            cards_left -= 1; 
+            cards_left -= 1;
+            current_card += 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        while cards_left > 0 {
+            print!("|       | ");
+            cards_left -= 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        let mut current_card = 0;
+        while cards_left > 0 {
+            let (color, _num) = get_card_info(&deck[current_card]);
+            print!("|   {color}   | ");
+            cards_left -= 1;
+            current_card += 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        while cards_left > 0 {
+            print!("|       | ");
+            cards_left -= 1;
+            current_card += 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        let mut current_card = 0;
+        while cards_left > 0 {
+            let (_color, num) = get_card_info(&deck[current_card]);
+            print!("|      {num}| ");
+            cards_left -= 1;
+            current_card += 1;
+        }
+        println!("");
+        let mut cards_left = deck.len();
+        while cards_left > 0 {
+            print!("\\-------/ ");
+            cards_left -= 1;
         }
         card_rows -= 1
     }
@@ -106,7 +145,7 @@ fn does_card_match(card_1: &String, card_2: &String) -> bool {
 
 fn main() {
     //initializating both players decks
-    let player1_deck = generate_deck();
+    let mut player1_deck = generate_deck();
     let player2_deck = generate_deck();
 
     let turn = 1;
@@ -121,8 +160,13 @@ fn main() {
         card_ascii(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
-        println!("\nYour deck is: \n{:?}",player1_deck);
 
+        //testing longer decks
+        player1_deck.push(pull_card());
+        player1_deck.push(pull_card());
+
+        //display players deck
+        println!("\nYour deck is:");
         display_player_deck(&player1_deck);
         
         break;
