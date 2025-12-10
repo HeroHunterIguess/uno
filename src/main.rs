@@ -73,7 +73,7 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
         current_card += 1;
 
         //break when its done with the row
-        if current_card > row * (CARDS_PER_ROW - 1) {
+        if current_card > row * CARDS_PER_ROW - 1 {
             break;
         }
     }
@@ -162,8 +162,6 @@ fn main() {
         println!("\n\nIt is player {turn}'s turn!");
 
         //testing longer decks
-        player1_deck.push(pull_card());
-        player1_deck.push(pull_card());
         player1_deck.push(pull_card());
 
         //display players deck
