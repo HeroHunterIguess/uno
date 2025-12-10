@@ -43,11 +43,13 @@ fn card_ascii(card: &str) {
 fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
     //setup variables necessary to display and have info about the card
     let mut cards_left = deck.len();
-    let mut current_card = 0;
+    
+    //initialize based on what row its on
+    let mut current_card = (row - 1) * 8;
 
     //loop while there are cards remaining until 8 have been printed
     while cards_left > 0 {
-        let (color, num) = get_card_info(&deck[current_card]);
+        let (color, num) = get_card_info(&deck[current_card as usize]);
         
         //print out that type of line with the info it needs
         if line_type == "num" && info_placement == "left" {
@@ -66,7 +68,9 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
 
         cards_left -= 1;
         current_card += 1;
-        if current_card >= 8 {
+        
+        //break when its done with the row
+        if current_card > (row - 1) * 8 {
             break;
         }
     }
@@ -74,19 +78,20 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
 }
 
 fn display_player_deck(deck: &Vec<String>) {
-    let mut card_rows = deck.len().div_ceil(8);
+
+    let mut card_row = 1;
 
     //loop and display ascii for every card in the deck
-    while card_rows > 0 { 
+    while card_row <= deck.len().div_ceil(8) { 
         
-        display_line_of_cards(deck, "top", "", card_rows as u8);
-        display_line_of_cards(deck, "num", "left", card_rows as u8);
-        display_line_of_cards(deck, "none", "", card_rows as u8);
-        display_line_of_cards(deck, "color", "", card_rows as u8);
-        display_line_of_cards(deck, "none", "", card_rows as u8);
-        display_line_of_cards(deck, "num", "right", card_rows as u8);
-        display_line_of_cards(deck, "bottom", "", card_rows as u8);
-        card_rows -= 1;
+        display_line_of_cards(deck, "top", "", card_row as u8);
+        display_line_of_cards(deck, "num", "left", card_row as u8);
+        display_line_of_cards(deck, "none", "", card_row as u8);
+        display_line_of_cards(deck, "color", "", card_row as u8);
+        display_line_of_cards(deck, "none", "", card_row as u8);
+        display_line_of_cards(deck, "num", "right", card_row as u8);
+        display_line_of_cards(deck, "bottom", "", card_row as u8);
+        card_row += 1;
     }
 }
 
@@ -156,9 +161,11 @@ fn main() {
         //testing longer decks
         player1_deck.push(pull_card());
         player1_deck.push(pull_card());
+        player1_deck.push(pull_card());
 
         //display players deck
         println!("\nYour deck is:");
+        println!("{:?}",player1_deck);
         display_player_deck(&player1_deck);
 
         //temporarily ending the loop so it doesnt spam w/ info
