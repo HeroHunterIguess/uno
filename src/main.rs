@@ -15,6 +15,7 @@ const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
 const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 const CARDS_PER_ROW: u8 = 7;
+const INITIAL_DECK_SIZE: u8 = 7;
 
 /*------------------------------*\
 : defining essential functions   
@@ -34,12 +35,12 @@ fn card_ascii(card: &str) {
 
     //print out a card
     println!("/-------\\ 
-|{num}      |
-|       |
-|   {color}   |
-|       |
-|      {num}|
-\\-------/");
+|{num}      | 
+|       | 
+|   {color}   | 
+|       | 
+|      {num}| 
+\\-------/ ");
 }
 
 fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
@@ -56,17 +57,17 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
         
         //print out that type of line with the info it needs
         if line_type == "num" && info_placement == "left" {
-            print!("|{num}      | ");
+            print!("|{num}      |  ");
         } else if line_type == "num" && info_placement == "right" {
-            print!("|      {num}| ");
+            print!("|      {num}|  ");
         } else if line_type == "color" {
-            print!("|   {color}   | ");
+            print!("|   {color}   |  ");
         } else if line_type == "none" {
-            print!("|       | ");
+            print!("|       |  ");
         } else if line_type == "top" {
-            print!("/-------\\ ");
+            print!("/-------\\  ");
         } else if line_type == "bottom" {
-            print!("\\-------/ ");
+            print!("\\-------/  ");
         }
 
         cards_left -= 1;
@@ -94,6 +95,9 @@ fn display_player_deck(deck: &Vec<String>) {
         display_line_of_cards(deck, "none", "", card_row as u8);
         display_line_of_cards(deck, "num", "right", card_row as u8);
         display_line_of_cards(deck, "bottom", "", card_row as u8);
+
+        println!(" ");
+
         card_row += 1;
     }
 }
@@ -105,7 +109,7 @@ fn pull_card() -> String {
 
     //generating the card
     card_generating_list.push(COLOR_OPTIONS[rng.gen_range(0..4)]);
-    card_generating_list.push(NUMBER_OPTIONS[rng.gen_range(0..8)]);
+    card_generating_list.push(NUMBER_OPTIONS[rng.gen_range(0..9)]);
 
     let card: String = card_generating_list.iter().collect();
 
@@ -115,7 +119,7 @@ fn pull_card() -> String {
 fn generate_deck() -> Vec<String> {
     //initializing and creating deck
     let mut deck: Vec<String> = Vec::new();
-    while deck.len() < 7 {
+    while deck.len() < INITIAL_DECK_SIZE.into() {
 
         //adding a single card
         deck.push(pull_card());
@@ -147,7 +151,7 @@ fn main() {
     let turn = 1;
 
     //setup the stack of cards with a random card on top
-    let card_on_stack = pull_card();
+    let mut card_on_stack = pull_card();
 
     loop {
 
@@ -161,12 +165,8 @@ fn main() {
 
         println!("\n\nIt is player {turn}'s turn!");
 
-        //testing longer decks
-        player1_deck.push(pull_card());
-
         //display players deck
         println!("\nYour deck is:");
-        println!("{:?}",player1_deck);
         display_player_deck(&player1_deck);
 
         //temporarily ending the loop so it doesnt spam w/ info
