@@ -9,13 +9,14 @@
 \*------------------------------------------------*/
 
 use rand::Rng;
+use std::io;
 
 //setting up necessary constants
 const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
 const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 const CARDS_PER_ROW: u8 = 7;
-const INITIAL_DECK_SIZE: u8 = 2;
+const INITIAL_DECK_SIZE: u8 = 1;
 
 /*------------------------------*\
 : defining essential functions   
@@ -28,7 +29,7 @@ fn get_card_info(card: &str) -> (char, char) {
     return (color, num);
 }
 
-fn card_ascii(card: &str) {
+fn display_single_card(card: &str) {
     //setup variables for the color and number based on the card
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
@@ -167,14 +168,16 @@ fn main() {
         : 
         : set current player deck 
         : 
+        : clear screen for new player
+        : 
         : loop infinitely:                                          ./
         : print out card on stack and whos turn it is               ./
         : tell them their deck                                      ./
         : 
-        : check if they have a card that matches the stack
-        : while they dont then
-        :   tell them they need to pull a card
-        :   pull new cards until they get a card that matches
+        : check if they have a card that matches the stack          ./
+        : while they dont then                                      ./
+        :   tell them they need to pull a card                      ./
+        :   pull new cards until they get a card that matches       ./
         :   
         : ask them what card they would like to play
         : 
@@ -194,6 +197,9 @@ fn main() {
         : repeat (but for other person)
         \*------------------------------*/
 
+        //clear screen (disable during development so i can see rust warnings)
+        print!("\x1B[2J");
+
         let mut current_player_deck: Vec<String> = Vec::new();
 
         if turn == 1 {
@@ -208,7 +214,7 @@ fn main() {
 
         //print out info for the player
         println!("This is the card on the stack: ");
-        card_ascii(card_on_stack.as_str());
+        display_single_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
 
@@ -229,25 +235,55 @@ fn main() {
             }
         }
 
+        //pull cards until you get one that matches
         while must_pull == true {
-            println!("You need to pull for a card! ");
+            //get user to accept pulling card
+            println!("You need to pull for a card! (enter anything to accept) ");
+            let mut input: String = String::new();
+
+            io::stdin().read_line(&mut input).expect("failed to take input");
             
             //pulling a card
             let pulled_card = pull_card();
             current_player_deck.push(pulled_card.clone());
 
+            //clear screen
+            print!("\x1B[2J");
+
+            //tell them what they pulled
+            println!("You pulled a {pulled_card}:");
+            display_single_card(&pulled_card);
+
+            //display stack once again
+            println!("\nThis is the card on the stack: ");
+            display_single_card(card_on_stack.as_str());
+
+            //checking if the new card matches
             if does_card_match(&pulled_card, &card_on_stack) {
-                println!("You now have a card that matches! ");
+                //clear screen & display info
+                print!("\x1B[2J");
+                println!("You now have a card that matches! \n");
                 must_pull = false;
 
+                //display new info
+                println!("This is the card on the stack: ");
+                display_single_card(card_on_stack.as_str());
+
                 //print out deck with new card
-                println!("Here is your new deck: ");
+                println!("\nHere is your new deck: ");
                 display_player_deck(&current_player_deck);
 
                 break;
             }
         }
 
+        /*------------------------------*\
+        : ask them to play a card
+        \*------------------------------*/
+
+        println!("Enter the card you want to play: ");
+        println!("Use format: colorNumber (ex: y5)");
+        
         //update whos turn it is
         if turn == 1 {
             turn = 2;
