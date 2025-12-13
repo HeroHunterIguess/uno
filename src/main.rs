@@ -156,6 +156,33 @@ fn main() {
     loop {
 
         /*------------------------------*\
+        : plans for logic:  
+        : 
+        : loop infinitely:
+        : print out card on stack and whos turn it is
+        : tell them their deck
+        : 
+        : check if they have a card that matches the stack
+        : if they dont then
+        :   tell them they need to pull a card
+        :   pull new cards until they get a card that matches
+        :   
+        : ask them what card they would like to play
+        : 
+        : check if the card matches
+        : if it does 
+        :   change the stack to that card
+        :   remove that card from their deck
+        : if it doesnt
+        :   tell them it doesnt match -> pick another one
+        : 
+        : change to other players turn
+        : 
+        : repeat (but for other person)
+        : 
+        \*------------------------------*/
+
+        /*------------------------------*\
         : displaying info for the player
         \*------------------------------*/
 
@@ -171,6 +198,5 @@ fn main() {
 
         //temporarily ending the loop so it doesnt spam w/ info
         break;
-
     }
 }
