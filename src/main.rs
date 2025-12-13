@@ -15,7 +15,7 @@ const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
 const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
 const CARDS_PER_ROW: u8 = 7;
-const INITIAL_DECK_SIZE: u8 = 7;
+const INITIAL_DECK_SIZE: u8 = 2;
 
 /*------------------------------*\
 : defining essential functions   
@@ -145,25 +145,34 @@ fn does_card_match(card_1: &String, card_2: &String) -> bool {
 
 fn main() {
     //initializating both players decks
-    let mut player1_deck = generate_deck();
+    let player1_deck = generate_deck();
     let player2_deck = generate_deck();
 
-    let turn = 1;
+    let mut turn = 1;
 
     //setup the stack of cards with a random card on top
     let mut card_on_stack = pull_card();
 
+    //initializing random variables
+    let mut must_pull = true;
+
+    /*------------------------------*\
+    : start main game logic loop
+    \*------------------------------*/
+
     loop {
 
         /*------------------------------*\
-        : plans for logic:  
+        : game loop pseudocode:
         : 
-        : loop infinitely:
-        : print out card on stack and whos turn it is
-        : tell them their deck
+        : set current player deck 
+        : 
+        : loop infinitely:                                          ./
+        : print out card on stack and whos turn it is               ./
+        : tell them their deck                                      ./
         : 
         : check if they have a card that matches the stack
-        : if they dont then
+        : while they dont then
         :   tell them they need to pull a card
         :   pull new cards until they get a card that matches
         :   
@@ -176,11 +185,22 @@ fn main() {
         : if it doesnt
         :   tell them it doesnt match -> pick another one
         : 
+        : check if someone has 0 cards
+        : if so
+        :   break out of loop and display winner
+        : 
         : change to other players turn
         : 
         : repeat (but for other person)
-        : 
         \*------------------------------*/
+
+        let mut current_player_deck: Vec<String> = Vec::new();
+
+        if turn == 1 {
+            current_player_deck = player1_deck.clone();
+        } else if turn == 2 {
+            current_player_deck = player2_deck.clone();
+        }
 
         /*------------------------------*\
         : displaying info for the player
@@ -195,6 +215,45 @@ fn main() {
         //display players deck
         println!("\nYour deck is:");
         display_player_deck(&player1_deck);
+
+        /*------------------------------*\
+        : checking if they need to pull
+        \*------------------------------*/
+
+        //check if they have a card that matches
+        for card in &current_player_deck {
+            if does_card_match(&card, &card_on_stack) {
+                //must_pull is true by default until a matching card is found
+                must_pull = false;
+                break;
+            }
+        }
+
+        while must_pull == true {
+            println!("You need to pull for a card! ");
+            
+            //pulling a card
+            let pulled_card = pull_card();
+            current_player_deck.push(pulled_card.clone());
+
+            if does_card_match(&pulled_card, &card_on_stack) {
+                println!("You now have a card that matches! ");
+                must_pull = false;
+
+                //print out deck with new card
+                println!("Here is your new deck: ");
+                display_player_deck(&current_player_deck);
+
+                break;
+            }
+        }
+
+        //update whos turn it is
+        if turn == 1 {
+            turn = 2;
+        } else if turn == 2 {
+            turn = 1;
+        }
 
         //temporarily ending the loop so it doesnt spam w/ info
         break;
