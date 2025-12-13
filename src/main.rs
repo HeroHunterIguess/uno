@@ -11,7 +11,7 @@
 use rand::Rng;
 use std::io;
 
-//setting up necessary constants
+/* setting up necessary constants */
 const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
 const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
@@ -23,18 +23,18 @@ const INITIAL_DECK_SIZE: u8 = 1;
 \*------------------------------*/
 
 fn get_card_info(card: &str) -> (char, char) {
-    //get color and number of current card
+    /* get color and number of current card */
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap();
     return (color, num);
 }
 
 fn display_single_card(card: &str) {
-    //setup variables for the color and number based on the card
+    /* setup variables for the color and number based on the card */
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
 
-    //print out a card
+    /* print out a card */
     println!("/-------\\ 
 |{num}      | 
 |       | 
@@ -45,18 +45,18 @@ fn display_single_card(card: &str) {
 }
 
 fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
-    //setup variables necessary to display and have info about the card
+    /* setup variables necessary to display and have info about the card */
     let mut cards_left = deck.len() as u8;
     cards_left -= (row - 1) * CARDS_PER_ROW;
     
-    //initialize based on what row its on
+    /* initialize based on what row its on */
     let mut current_card = (row - 1) * CARDS_PER_ROW;
 
-    //loop while there are cards remaining until the (amount of cards in a row) have been printed
+    /* loop while there are cards remaining until the (amount of cards in a row) have been printed */
     while cards_left > 0 {
         let (color, num) = get_card_info(&deck[current_card as usize]);
         
-        //print out that type of line with the info it needs
+        /* print out that type of line with the info it needs */ 
         if line_type == "num" && info_placement == "left" {
             print!("|{num}      |  ");
         } else if line_type == "num" && info_placement == "right" {
@@ -74,7 +74,7 @@ fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &s
         cards_left -= 1;
         current_card += 1;
 
-        //break when its done with the row
+        /* break when its done with the row */
         if current_card > row * CARDS_PER_ROW - 1 {
             break;
         }
@@ -86,7 +86,7 @@ fn display_player_deck(deck: &Vec<String>) {
 
     let mut card_row = 1;
 
-    //loop and display ascii for every card in the deck
+    /* loop and display ascii for every card in the deck */
     while card_row <= deck.len().div_ceil(CARDS_PER_ROW.into()) { 
         
         display_line_of_cards(deck, "top", "", card_row as u8);
@@ -104,11 +104,11 @@ fn display_player_deck(deck: &Vec<String>) {
 }
 
 fn pull_card() -> String {
-    //initialize rng and list the card gets made in
+    /* initialize rng and list the card gets made in */
     let mut rng = rand::thread_rng();
     let mut card_generating_list: Vec<char> = Vec::new();
 
-    //generating the card
+    /* generating the card */
     card_generating_list.push(COLOR_OPTIONS[rng.gen_range(0..4)]);
     card_generating_list.push(NUMBER_OPTIONS[rng.gen_range(0..9)]);
 
@@ -118,22 +118,22 @@ fn pull_card() -> String {
 }
 
 fn generate_deck() -> Vec<String> {
-    //initializing and creating deck
+    /* initializing and creating deck */
     let mut deck: Vec<String> = Vec::new();
     while deck.len() < INITIAL_DECK_SIZE.into() {
 
-        //adding a single card
+        /* adding a single card */
         deck.push(pull_card());
     }
     return deck;
 }
 
 fn does_card_match(card_1: &String, card_2: &String) -> bool {
-    //check if colors match
+    /* check if colors match */
     if card_1.chars().nth(0) == card_2.chars().nth(0) {
         return true;
     
-    //check if numbers match
+    /* check if numbers match */
     } else if card_1.chars().nth(1) == card_2.chars().nth(1) {
         return true;
     }
@@ -145,16 +145,16 @@ fn does_card_match(card_1: &String, card_2: &String) -> bool {
 \*------------------------------*/
 
 fn main() {
-    //initializating both players decks
+    /* initializating both players decks */
     let player1_deck = generate_deck();
     let player2_deck = generate_deck();
 
     let mut turn = 1;
 
-    //setup the stack of cards with a random card on top
+    /* setup the stack of cards with a random card on top */ 
     let mut card_on_stack = pull_card();
 
-    //initializing random variables
+    /* initializing random variables */
     let mut must_pull = true;
 
     /*------------------------------*\
@@ -166,11 +166,11 @@ fn main() {
         /*------------------------------*\
         : game loop pseudocode:
         : 
-        : set current player deck 
+        : set current player deck                                   ./
+        :   
+        : clear screen for new player                               ./
         : 
-        : clear screen for new player
-        : 
-        : loop infinitely:                                          ./
+        : loop infinitely:                                          
         : print out card on stack and whos turn it is               ./
         : tell them their deck                                      ./
         : 
@@ -179,14 +179,19 @@ fn main() {
         :   tell them they need to pull a card                      ./
         :   pull new cards until they get a card that matches       ./
         :   
-        : ask them what card they would like to play
+        : ask them what card they would like to play                ./
         : 
-        : check if the card matches
-        : if it does 
-        :   change the stack to that card
-        :   remove that card from their deck
-        : if it doesnt
-        :   tell them it doesnt match -> pick another one
+        : check if they have the card
+        : if they do
+        :   check if the card matches
+        :   if it does 
+        :       change the stack to that card
+        :       remove that card from their deck
+        :   if it doesnt
+        :       ell them it doesnt match -> pick another one
+        : if they dont have the card
+        :   tell them they dont have it
+        :   ask to input card
         : 
         : check if someone has 0 cards
         : if so
@@ -197,7 +202,7 @@ fn main() {
         : repeat (but for other person)
         \*------------------------------*/
 
-        //clear screen (disable during development so i can see rust warnings)
+        /* clear screen (disable during development so i can see rust warnings) */
         print!("\x1B[2J");
 
         let mut current_player_deck: Vec<String> = Vec::new();
@@ -212,7 +217,7 @@ fn main() {
         : displaying info for the player
         \*------------------------------*/
 
-        //print out info for the player
+        /* print out info for the player */
         println!("This is the card on the stack: ");
         display_single_card(card_on_stack.as_str());
 
@@ -226,50 +231,51 @@ fn main() {
         : checking if they need to pull
         \*------------------------------*/
 
-        //check if they have a card that matches
+        /* check if they have a card that matches */
         for card in &current_player_deck {
             if does_card_match(&card, &card_on_stack) {
-                //must_pull is true by default until a matching card is found
+                /* must_pull is true by default until a matching card is found */
                 must_pull = false;
                 break;
             }
         }
 
-        //pull cards until you get one that matches
+        /* pull cards until you get one that matches */
         while must_pull == true {
-            //get user to accept pulling card
+            /* get user to accept pulling card */
             println!("You need to pull for a card! (enter anything to accept) ");
             let mut input: String = String::new();
 
             io::stdin().read_line(&mut input).expect("failed to take input");
             
-            //pulling a card
+            /* pulling a card */
             let pulled_card = pull_card();
             current_player_deck.push(pulled_card.clone());
 
-            //clear screen
+            /* clear screen */
             print!("\x1B[2J");
 
-            //tell them what they pulled
-            println!("You pulled a {pulled_card}:");
-            display_single_card(&pulled_card);
-
-            //display stack once again
-            println!("\nThis is the card on the stack: ");
+            /* display stack once again */
+            println!("This is the card on the stack: ");
             display_single_card(card_on_stack.as_str());
 
-            //checking if the new card matches
+            /* tell them what they pulled */
+            println!("\n\nYou pulled a {pulled_card}:");
+            display_single_card(&pulled_card);
+
+            /* checking if the new card matches */ 
             if does_card_match(&pulled_card, &card_on_stack) {
-                //clear screen & display info
-                print!("\x1B[2J");
-                println!("You now have a card that matches! \n");
                 must_pull = false;
 
-                //display new info
-                println!("This is the card on the stack: ");
+                /* clear screen & display info */
+                print!("\x1B[2J");
+                println!("You now have a card that matches!");
+
+                /* display new info */
+                println!("\nThis is the card on the stack: ");
                 display_single_card(card_on_stack.as_str());
 
-                //print out deck with new card
+                /* print out deck with new card */
                 println!("\nHere is your new deck: ");
                 display_player_deck(&current_player_deck);
 
@@ -284,14 +290,14 @@ fn main() {
         println!("Enter the card you want to play: ");
         println!("Use format: colorNumber (ex: y5)");
         
-        //update whos turn it is
+        /* update whos turn it is */
         if turn == 1 {
             turn = 2;
         } else if turn == 2 {
             turn = 1;
         }
 
-        //temporarily ending the loop so it doesnt spam w/ info
+        /* temporarily ending the loop so it doesnt spam w/ info */
         break;
     }
 }
