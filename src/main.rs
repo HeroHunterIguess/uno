@@ -181,12 +181,46 @@ fn main() {
 
         println!("Enter the card you want to play: ");
         println!("Use format: colorNumber (ex: y5)");
-        print!("> ");
 
+        /* get player input */
         let mut inputted_card: String = String::new();
         io::stdin().read_line(&mut inputted_card).expect("failed to take input");
-        
-        
+
+        let inputted_card = inputted_card.trim().to_lowercase();
+
+        let mut does_have_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+
+        /* check if they have the card and ask again if they dont */
+        while !does_have_card {
+            /*------------------------------------------------*/
+
+            /* clear screen & display info */
+            print!("\x1B[2J");
+
+            /* display new info */
+            println!("\nThis is the card on the stack: ");
+            display_utils::display_single_card(card_on_stack.as_str());
+
+            /* print out deck with new card */
+            println!("\nHere is your new deck: ");
+            display_utils::display_player_deck(&current_player_deck);
+
+            /* tell them to pick a new card */
+            println!("You dont have that card!\n");
+
+            println!("Enter the card you want to play: ");
+            println!("Use format: colorNumber (ex: y5)");
+
+            /*------------------------------------------------*/
+
+            /* get player input */
+            let mut inputted_card: String = String::new();
+            io::stdin().read_line(&mut inputted_card).expect("failed to take input");
+
+            let inputted_card = inputted_card.trim().to_lowercase();
+            
+            does_have_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+        }
 
         /* update whos turn it is */
         if turn == 1 {

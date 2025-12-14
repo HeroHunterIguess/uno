@@ -56,3 +56,12 @@ pub fn does_card_match(card_1: &String, card_2: &String) -> bool {
     }
     return false;
 }
+
+pub fn does_player_have_card(deck: &Vec<String>, card: &String) -> bool {
+    for current_card in deck {
+        if current_card == card {
+            return true;
+        }
+    }
+    return false;
+}
