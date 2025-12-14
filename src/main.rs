@@ -8,137 +8,11 @@
 : some of this code prob isnt good im bad at rust 
 \*------------------------------------------------*/
 
-use rand::Rng;
+/* bringing in necessary stuff */
 use std::io;
 
-/* setting up necessary constants */
-const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
-const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-
-const CARDS_PER_ROW: u8 = 7;
-const INITIAL_DECK_SIZE: u8 = 1;
-
-/*------------------------------*\
-: defining essential functions   
-\*------------------------------*/
-
-fn get_card_info(card: &str) -> (char, char) {
-    /* get color and number of current card */
-    let color = card.chars().nth(0).unwrap();
-    let num = card.chars().nth(1).unwrap();
-    return (color, num);
-}
-
-fn display_single_card(card: &str) {
-    /* setup variables for the color and number based on the card */
-    let color = card.chars().nth(0).unwrap();
-    let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
-
-    /* print out a card */
-    println!("/-------\\ 
-|{num}      | 
-|       | 
-|   {color}   | 
-|       | 
-|      {num}| 
-\\-------/ ");
-}
-
-fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
-    /* setup variables necessary to display and have info about the card */
-    let mut cards_left = deck.len() as u8;
-    cards_left -= (row - 1) * CARDS_PER_ROW;
-    
-    /* initialize based on what row its on */
-    let mut current_card = (row - 1) * CARDS_PER_ROW;
-
-    /* loop while there are cards remaining until the (amount of cards in a row) have been printed */
-    while cards_left > 0 {
-        let (color, num) = get_card_info(&deck[current_card as usize]);
-        
-        /* print out that type of line with the info it needs */ 
-        if line_type == "num" && info_placement == "left" {
-            print!("|{num}      |  ");
-        } else if line_type == "num" && info_placement == "right" {
-            print!("|      {num}|  ");
-        } else if line_type == "color" {
-            print!("|   {color}   |  ");
-        } else if line_type == "none" {
-            print!("|       |  ");
-        } else if line_type == "top" {
-            print!("/-------\\  ");
-        } else if line_type == "bottom" {
-            print!("\\-------/  ");
-        }
-
-        cards_left -= 1;
-        current_card += 1;
-
-        /* break when its done with the row */
-        if current_card > row * CARDS_PER_ROW - 1 {
-            break;
-        }
-    }
-    print!("\n");
-}
-
-fn display_player_deck(deck: &Vec<String>) {
-
-    let mut card_row = 1;
-
-    /* loop and display ascii for every card in the deck */
-    while card_row <= deck.len().div_ceil(CARDS_PER_ROW.into()) { 
-        
-        display_line_of_cards(deck, "top", "", card_row as u8);
-        display_line_of_cards(deck, "num", "left", card_row as u8);
-        display_line_of_cards(deck, "none", "", card_row as u8);
-        display_line_of_cards(deck, "color", "", card_row as u8);
-        display_line_of_cards(deck, "none", "", card_row as u8);
-        display_line_of_cards(deck, "num", "right", card_row as u8);
-        display_line_of_cards(deck, "bottom", "", card_row as u8);
-
-        println!(" ");
-
-        card_row += 1;
-    }
-}
-
-fn pull_card() -> String {
-    /* initialize rng and list the card gets made in */
-    let mut rng = rand::thread_rng();
-    let mut card_generating_list: Vec<char> = Vec::new();
-
-    /* generating the card */
-    card_generating_list.push(COLOR_OPTIONS[rng.gen_range(0..4)]);
-    card_generating_list.push(NUMBER_OPTIONS[rng.gen_range(0..9)]);
-
-    let card: String = card_generating_list.iter().collect();
-
-    return card;
-}
-
-fn generate_deck() -> Vec<String> {
-    /* initializing and creating deck */
-    let mut deck: Vec<String> = Vec::new();
-    while deck.len() < INITIAL_DECK_SIZE.into() {
-
-        /* adding a single card */
-        deck.push(pull_card());
-    }
-    return deck;
-}
-
-fn does_card_match(card_1: &String, card_2: &String) -> bool {
-    /* check if colors match */
-    if card_1.chars().nth(0) == card_2.chars().nth(0) {
-        return true;
-    
-    /* check if numbers match */
-    } else if card_1.chars().nth(1) == card_2.chars().nth(1) {
-        return true;
-    }
-    return false;
-}
+mod card_utils;
+mod display_utils;
 
 /*------------------------------*\
 : starting main game
@@ -146,13 +20,13 @@ fn does_card_match(card_1: &String, card_2: &String) -> bool {
 
 fn main() {
     /* initializating both players decks */
-    let player1_deck = generate_deck();
-    let player2_deck = generate_deck();
+    let player1_deck = card_utils::generate_deck();
+    let player2_deck = card_utils::generate_deck();
 
     let mut turn = 1;
 
     /* setup the stack of cards with a random card on top */ 
-    let mut card_on_stack = pull_card();
+    let mut card_on_stack = card_utils::pull_card();
 
     /* initializing random variables */
     let mut must_pull = true;
@@ -219,13 +93,13 @@ fn main() {
 
         /* print out info for the player */
         println!("This is the card on the stack: ");
-        display_single_card(card_on_stack.as_str());
+        display_utils::display_single_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
 
         //display players deck
         println!("\nYour deck is:");
-        display_player_deck(&player1_deck);
+        display_utils::display_player_deck(&player1_deck);
 
         /*------------------------------*\
         : checking if they need to pull
@@ -233,7 +107,7 @@ fn main() {
 
         /* check if they have a card that matches */
         for card in &current_player_deck {
-            if does_card_match(&card, &card_on_stack) {
+            if card_utils::does_card_match(&card, &card_on_stack) {
                 /* must_pull is true by default until a matching card is found */
                 must_pull = false;
                 break;
@@ -249,7 +123,7 @@ fn main() {
             io::stdin().read_line(&mut input).expect("failed to take input");
             
             /* pulling a card */
-            let pulled_card = pull_card();
+            let pulled_card = card_utils::pull_card();
             current_player_deck.push(pulled_card.clone());
 
             /* clear screen */
@@ -257,14 +131,14 @@ fn main() {
 
             /* display stack once again */
             println!("This is the card on the stack: ");
-            display_single_card(card_on_stack.as_str());
+            display_utils::display_single_card(card_on_stack.as_str());
 
             /* tell them what they pulled */
             println!("\n\nYou pulled a {pulled_card}:");
-            display_single_card(&pulled_card);
+            display_utils::display_single_card(&pulled_card);
 
             /* checking if the new card matches */ 
-            if does_card_match(&pulled_card, &card_on_stack) {
+            if card_utils::does_card_match(&pulled_card, &card_on_stack) {
                 must_pull = false;
 
                 /* clear screen & display info */
@@ -273,11 +147,11 @@ fn main() {
 
                 /* display new info */
                 println!("\nThis is the card on the stack: ");
-                display_single_card(card_on_stack.as_str());
+                display_utils::display_single_card(card_on_stack.as_str());
 
                 /* print out deck with new card */
                 println!("\nHere is your new deck: ");
-                display_player_deck(&current_player_deck);
+                display_utils::display_player_deck(&current_player_deck);
 
                 break;
             }

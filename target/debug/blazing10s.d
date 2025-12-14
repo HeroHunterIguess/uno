@@ -1,1 +1,1 @@
-/home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/target/debug/blazing10s: /home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/src/main.rs
+/home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/target/debug/blazing10s: /home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/src/card_utils.rs /home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/src/display_utils.rs /home/herohunter/Everything/Coding/rust\ CARGOS/blazing10s/src/main.rs
