@@ -1,5 +1,5 @@
-# blazing 10s (its just uno)
-an (work in progress) uno-like game
+# uno-like recreation
+## a (work in progress) uno-like game
 
 not much to this its a pretty small project just recreating uno in rust
 

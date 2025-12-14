@@ -126,10 +126,12 @@ fn main() {
             let pulled_card = card_utils::pull_card();
             current_player_deck.push(pulled_card.clone());
 
+            /*------------------------------------------------*/
+
             /* clear screen */
             print!("\x1B[2J");
 
-            /* display stack once again */
+            /* display stack */
             println!("This is the card on the stack: ");
             display_utils::display_single_card(card_on_stack.as_str());
 
@@ -137,12 +139,26 @@ fn main() {
             println!("\n\nYou pulled a {pulled_card}:");
             display_utils::display_single_card(&pulled_card);
 
+            /* display deck again */
+            println!("\nHere is your new deck: ");
+            display_utils::display_player_deck(&current_player_deck);
+
+            /*------------------------------------------------*/
+
             /* checking if the new card matches */ 
             if card_utils::does_card_match(&pulled_card, &card_on_stack) {
                 must_pull = false;
 
+                /*------------------------------------------------*/
+
                 /* clear screen & display info */
                 print!("\x1B[2J");
+
+                /* tell them what they pulled */
+                println!("\n\nYou pulled a {pulled_card}:");
+                display_utils::display_single_card(&pulled_card);
+
+                /* tell them it matches */
                 println!("You now have a card that matches!");
 
                 /* display new info */
@@ -153,17 +169,25 @@ fn main() {
                 println!("\nHere is your new deck: ");
                 display_utils::display_player_deck(&current_player_deck);
 
+                /*------------------------------------------------*/
+
                 break;
             }
         }
 
         /*------------------------------*\
-        : ask them to play a card
+        : get user to play a card
         \*------------------------------*/
 
         println!("Enter the card you want to play: ");
         println!("Use format: colorNumber (ex: y5)");
+        print!("> ");
+
+        let mut inputted_card: String = String::new();
+        io::stdin().read_line(&mut inputted_card).expect("failed to take input");
         
+        
+
         /* update whos turn it is */
         if turn == 1 {
             turn = 2;
