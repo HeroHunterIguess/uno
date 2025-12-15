@@ -55,17 +55,17 @@ fn main() {
         :   
         : ask them what card they would like to play                ./
         : 
-        : check if they have the card
-        : if they do
-        :   check if the card matches
-        :   if it does 
-        :       change the stack to that card
-        :       remove that card from their deck
-        :   if it doesnt
-        :       ell them it doesnt match -> pick another one
-        : if they dont have the card
-        :   tell them they dont have it
-        :   ask to input card
+        : check if they have the card                               ./
+        : if they do                                                ./
+        :   check if the card matches                               
+        :   if it does                                              
+        :       change the stack to that card                       
+        :       remove that card from their deck                    
+        :   if it doesnt                                            ./
+        :       tell them it doesnt match -> pick another one       ./
+        : if they dont have the card                                ./
+        :   tell them they dont have it                             ./
+        :   ask to input card                                       ./
         : 
         : check if someone has 0 cards
         : if so
@@ -188,10 +188,10 @@ fn main() {
 
         let inputted_card = inputted_card.trim().to_lowercase();
 
-        let mut does_have_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+        let mut has_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
 
         /* check if they have the card and ask again if they dont */
-        while !does_have_card {
+        while !has_card || !card_utils::does_card_match(&inputted_card, &card_on_stack) {
             /*------------------------------------------------*/
 
             /* clear screen & display info */
@@ -206,7 +206,11 @@ fn main() {
             display_utils::display_player_deck(&current_player_deck);
 
             /* tell them to pick a new card */
-            println!("You dont have that card!\n");
+            if !has_card {
+                println!("You dont have that card!\n");
+            } else {
+                println!("That card doesnt match the stack...\n");
+            }
 
             println!("Enter the card you want to play: ");
             println!("Use format: colorNumber (ex: y5)");
@@ -219,7 +223,12 @@ fn main() {
 
             let inputted_card = inputted_card.trim().to_lowercase();
             
-            does_have_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+            has_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+
+            if has_card && card_utils::does_card_match(&inputted_card, &card_on_stack) {
+                println!("\nThat card matches the stack! \n");
+                break; 
+            }
         }
 
         /* update whos turn it is */
