@@ -57,8 +57,8 @@ fn main() {
         : 
         : check if they have the card                               ./
         : if they do                                                ./
-        :   check if the card matches                               
-        :   if it does                                              
+        :   check if the card matches                               ./
+        :   if it does                                              ./
         :       change the stack to that card                       
         :       remove that card from their deck                    
         :   if it doesnt                                            ./
@@ -223,13 +223,46 @@ fn main() {
 
             let inputted_card = inputted_card.trim().to_lowercase();
             
+            /* check if player has card */
             has_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
 
+            /* display message and break if they have a good card */
             if has_card && card_utils::does_card_match(&inputted_card, &card_on_stack) {
                 println!("\nThat card matches the stack! \n");
                 break; 
             }
         }
+
+        /* update stack and player deck */
+        card_on_stack = inputted_card.clone();
+        card_utils::remove_card_from_deck(&mut current_player_deck, &card_on_stack);
+
+        /*------------------------------*\
+        : display info at end of turn
+        \*------------------------------*/
+
+        /*------------------------------------------------*/
+
+        /* clear screen & display info */
+        print!("\x1B[2J");
+
+        println!("\nPlayer {turn} played a {inputted_card}\n");
+
+        /* display new info */
+        println!("\nThis is the card on the stack: ");
+        display_utils::display_single_card(card_on_stack.as_str());
+
+        /* print out deck with new card */
+        println!("\nHere is your new deck: ");
+        display_utils::display_player_deck(&current_player_deck);
+
+        /*------------------------------------------------*/
+
+        /* update to next players turn */
+        println!("It is now player {turn}'s turn! (enter anything to accept) ");
+        let mut input: String = String::new();
+
+        io::stdin().read_line(&mut input).expect("failed to take input");
 
         /* update whos turn it is */
         if turn == 1 {
