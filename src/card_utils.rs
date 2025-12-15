@@ -57,16 +57,6 @@ pub fn does_card_match(card_1: &String, card_2: &String) -> bool {
     return false;
 }
 
-pub fn does_player_have_card(deck: &Vec<String>, card: &String) -> bool {
-    /* check if any card matches the given target */
-    for current_card in deck {
-        if current_card == card {
-            return true;
-        }
-    }
-    return false;
-}
-
 pub fn remove_card_from_deck(deck: &mut Vec<String>, card: &String) {
     let original_length = deck.len();
     /* retain all cards that dont match the target and remove the target card */

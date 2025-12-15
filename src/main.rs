@@ -188,7 +188,7 @@ fn main() {
 
         let inputted_card = inputted_card.trim().to_lowercase();
 
-        let mut has_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+        let mut has_card = current_player_deck.contains(&inputted_card);
 
         /* check if they have the card and ask again if they dont */
         while !has_card || !card_utils::does_card_match(&inputted_card, &card_on_stack) {
@@ -224,7 +224,7 @@ fn main() {
             let inputted_card = inputted_card.trim().to_lowercase();
             
             /* check if player has card */
-            has_card = card_utils::does_player_have_card(&current_player_deck, &inputted_card);
+            has_card = current_player_deck.contains(&inputted_card);
 
             /* display message and break if they have a good card */
             if has_card && card_utils::does_card_match(&inputted_card, &card_on_stack) {
