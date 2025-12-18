@@ -20,8 +20,8 @@ mod display_utils;
 
 fn main() {
     /* initializating both players decks */
-    let player1_deck = card_utils::generate_deck();
-    let player2_deck = card_utils::generate_deck();
+    let mut player1_deck = card_utils::generate_deck();
+    let mut player2_deck = card_utils::generate_deck();
 
     let mut turn = 1;
 
@@ -69,11 +69,11 @@ fn main() {
         : 
         : check if someone has 0 cards
         : if so
-        :   break out of loop and display winner
+        :   break out of loop and display winner 
         : 
-        : change to other players turn
+        : change to other players turn                              ./
         : 
-        : repeat (but for other person)
+        : repeat (but for other person)                             ./
         \*------------------------------*/
 
         /* clear screen (disable during development so i can see rust warnings) */
@@ -192,16 +192,13 @@ fn main() {
 
         /* check if they have the card and ask again if they dont */
         while !has_card || !card_utils::does_card_match(&inputted_card, &card_on_stack) {
-            /*------------------------------------------------*/
 
-            /* clear screen & display info */
+            /* clear screen & display new info */
             print!("\x1B[2J");
 
-            /* display new info */
             println!("\nThis is the card on the stack: ");
             display_utils::display_single_card(card_on_stack.as_str());
 
-            /* print out deck with new card */
             println!("\nHere is your new deck: ");
             display_utils::display_player_deck(&current_player_deck);
 
@@ -215,9 +212,7 @@ fn main() {
             println!("Enter the card you want to play: ");
             println!("Use format: colorNumber (ex: y5)");
 
-            /*------------------------------------------------*/
-
-            /* get player input */
+            /* get player card choice */
             let mut inputted_card: String = String::new();
             io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
@@ -241,22 +236,8 @@ fn main() {
         : display info at end of turn
         \*------------------------------*/
 
-        /*------------------------------------------------*/
-
         /* clear screen & display info */
         print!("\x1B[2J");
-
-        println!("\nPlayer {turn} played a {inputted_card}\n");
-
-        /* display new info */
-        println!("\nThis is the card on the stack: ");
-        display_utils::display_single_card(card_on_stack.as_str());
-
-        /* print out deck with new card */
-        println!("\nHere is your new deck: ");
-        display_utils::display_player_deck(&current_player_deck);
-
-        /*------------------------------------------------*/
 
         /* update to next players turn */
         println!("It is now player {turn}'s turn! (enter anything to accept) ");
@@ -264,14 +245,13 @@ fn main() {
 
         io::stdin().read_line(&mut input).expect("failed to take input");
 
-        /* update whos turn it is */
         if turn == 1 {
+            player1_deck = current_player_deck;
             turn = 2;
         } else if turn == 2 {
+            player2_deck = current_player_deck;
             turn = 1;
         }
-
-        /* temporarily ending the loop so it doesnt spam w/ info */
-        break;
+        must_pull = false;
     }
 }

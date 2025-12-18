@@ -7,7 +7,7 @@ use rand::Rng;
 
 const COLOR_OPTIONS: [char; 4] = ['r','y','b','g'];
 const NUMBER_OPTIONS: [char; 9] = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
-const INITIAL_DECK_SIZE: u8 = 1;
+const INITIAL_DECK_SIZE: u8 = 3;
 
 /*--------------------------------*\
 : essential card related utilities
