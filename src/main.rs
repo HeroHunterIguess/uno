@@ -252,6 +252,6 @@ fn main() {
             player2_deck = current_player_deck;
             turn = 1;
         }
-        must_pull = false;
+        must_pull = true;
     }
 }
