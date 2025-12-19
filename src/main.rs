@@ -15,42 +15,6 @@ mod card_utils;
 mod display_utils;
 
 /*------------------------------*\
-: card struct & functions setup
-\*------------------------------*/
-
-/* add attributes of card */
-struct card {
-    color: char,
-    number: char,
-}
-
-/* add functions relating to an individual card */
-impl card {
-    /* check if self matches other card */
-    fn does_card_match(card: &String) -> bool {
-        if self.color == card.color || self.color == card.color {
-            return true;
-        } else {return false;}
-    }
-    
-    /* display a single given card with ascii */
-    pub fn display_single_card(card: &str) {
-        /* setup variables for the color and number based on the card */
-        let color = card.chars().nth(0).unwrap();
-        let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
-    
-        /* print out a card */
-        println!("/-------\\ 
-|{num}      | 
-|       | 
-|   {color}   | 
-|       | 
-|      {num}| 
-\\-------/ ");
-    }
-}
-
-/*------------------------------*\
 : starting main game
 \*------------------------------*/
 
