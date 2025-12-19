@@ -15,6 +15,26 @@ mod card_utils;
 mod display_utils;
 
 /*------------------------------*\
+: card struct & functions setup
+\*------------------------------*/
+
+/* add attributes of card */
+struct card {
+    color: char,
+    number: char,
+}
+
+/* add functions relating to an individual card */
+impl card {
+    fn does_card_match(card: &String) -> bool {
+        /* check if either part matches */
+        if self.color == card.color || self.color == card.color {
+            return true;
+        } else {return false;}
+    }
+}
+
+/*------------------------------*\
 : starting main game
 \*------------------------------*/
 
