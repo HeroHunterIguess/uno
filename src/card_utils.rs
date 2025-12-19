@@ -14,7 +14,7 @@ const INITIAL_DECK_SIZE: u8 = 3;
 \*------------------------------*/
 
 /* add attributes of card */
-struct Card {
+pub struct Card {
     color: char,
     number: char,
 }

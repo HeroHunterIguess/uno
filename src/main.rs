@@ -79,7 +79,7 @@ fn main() {
         /* clear screen (disable during development so i can see rust warnings) */
         //print!("\x1B[2J");
 
-        let mut current_player_deck: Vec<String> = Vec::new();
+        let mut current_player_deck: Vec<Card> = Vec::new();
 
         if turn == 1 {
             current_player_deck = player1_deck.clone();
@@ -94,7 +94,7 @@ fn main() {
         /* print out info for the player */
         println!("This is the card on the stack: ");
         println!("{card_on_stack}");
-        display_utils::display_card(card_on_stack.as_str());
+        display_utils::display_card(&card_on_stack);
 
         println!("\n\nIt is player {turn}'s turn!");
 
@@ -132,7 +132,7 @@ fn main() {
 
             /* display stack */
             println!("This is the card on the stack: ");
-            display_utils::display_card(card_on_stack.as_str());
+            display_utils::display_card(card_on_stack);
 
             /* tell them what they pulled */
             println!("\n\nYou pulled a {pulled_card}:");
