@@ -29,19 +29,15 @@ impl card {
     }
     
     /* display a single given card with ascii */
-    pub fn display_single_card(card: &str) {
-        /* setup variables for the color and number based on the card */
-        let color = card.chars().nth(0).unwrap();
-        let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
-    
+    fn display_card() {
         /* print out a card */
         println!("/-------\\ 
-|{num}      | 
+|{}      | 
 |       | 
-|   {color}   | 
+|   {}   | 
 |       | 
-|      {num}| 
-\\-------/ ");
+|      {}| 
+\\-------/ ", self.color, self.number, self.color);
     }
 }
 
