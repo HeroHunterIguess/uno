@@ -12,22 +12,6 @@ const CARDS_PER_ROW: u8 = 7;
 : essential ascii display functions
 \*--------------------------------*/
 
-/* display a single given card with ascii */
-pub fn display_single_card(card: &str) {
-    /* setup variables for the color and number based on the card */
-    let color = card.chars().nth(0).unwrap();
-    let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
-
-    /* print out a card */
-    println!("/-------\\ 
-|{num}      | 
-|       | 
-|   {color}   | 
-|       | 
-|      {num}| 
-\\-------/ ");
-}
-
 /* display 1 text line of a row of cards */
 pub fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
     /* setup variables necessary to display and have info about the card */
