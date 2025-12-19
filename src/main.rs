@@ -94,7 +94,7 @@ fn main() {
         /* print out info for the player */
         println!("This is the card on the stack: ");
         println!("{card_on_stack}");
-        display_utils::display_single_card(card_on_stack.as_str());
+        display_utils::display_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
 
@@ -132,11 +132,11 @@ fn main() {
 
             /* display stack */
             println!("This is the card on the stack: ");
-            display_utils::display_single_card(card_on_stack.as_str());
+            display_utils::display_card(card_on_stack.as_str());
 
             /* tell them what they pulled */
             println!("\n\nYou pulled a {pulled_card}:");
-            display_utils::display_single_card(&pulled_card);
+            display_utils::display_card(&pulled_card);
 
             /* display deck again */
             println!("\nHere is your new deck: ");
@@ -153,14 +153,14 @@ fn main() {
 
                 /* tell them what they pulled */
                 println!("\n\nYou pulled a {pulled_card}:");
-                display_utils::display_single_card(&pulled_card);
+                display_utils::display_card(&pulled_card);
 
                 /* tell them it matches */
                 println!("You now have a card that matches!");
 
                 /* display new info */
                 println!("\nThis is the card on the stack: ");
-                display_utils::display_single_card(card_on_stack.as_str());
+                display_utils::display_card(card_on_stack.as_str());
 
                 /* print out deck with new card */
                 println!("\nHere is your new deck: ");
@@ -193,7 +193,7 @@ fn main() {
             //print!("\x1B[2J");
 
             println!("\nThis is the card on the stack: ");
-            display_utils::display_single_card(card_on_stack.as_str());
+            display_utils::display_card(card_on_stack.as_str());
 
             println!("\nHere is your new deck: ");
             display_utils::display_player_deck(&current_player_deck);
