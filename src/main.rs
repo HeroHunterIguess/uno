@@ -98,7 +98,7 @@ fn main() {
 
         println!("\n\nIt is player {turn}'s turn!");
 
-        /* display players deck */
+        //display players deck
         println!("\nYour deck is:");
         display_utils::display_player_deck(&current_player_deck);
 
@@ -235,7 +235,7 @@ fn main() {
         /* clear screen & display info */
         //print!("\x1B[2J");
 
-        /* update to next players turn & reset necessary variables*/
+        /* update to next players turn */
         println!("It is now player {turn}'s turn! (enter anything to accept) ");
         let mut input: String = String::new();
 
