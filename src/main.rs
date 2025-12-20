@@ -146,8 +146,6 @@ fn main() {
             if card_utils::does_card_match(&pulled_card, &card_on_stack) {
                 must_pull = false;
 
-                /*------------------------------------------------*/
-
                 /* clear screen & display info */
                 //print!("\x1B[2J");
 
@@ -160,13 +158,11 @@ fn main() {
 
                 /* display new info */
                 println!("\nThis is the card on the stack: ");
-                display_utils::display_card(card_on_stack.as_str());
+                display_utils::display_card(card_on_stack);
 
                 /* print out deck with new card */
                 println!("\nHere is your new deck: ");
                 display_utils::display_player_deck(&current_player_deck);
-
-                /*------------------------------------------------*/
 
                 break;
             }
@@ -180,10 +176,12 @@ fn main() {
         println!("Use format: colorNumber (ex: y5)");
 
         /* get player input */
-        let mut inputted_card: String = String::new();
-        io::stdin().read_line(&mut inputted_card).expect("failed to take input");
+        let mut raw_inputted_card: String = String::new();
+        io::stdin().read_line(&mut raw_inputted_card).expect("failed to take input");
 
-        let inputted_card = inputted_card.trim().to_lowercase();
+        let inputted_card = Card {
+            /* set color and number based on what user inputted */
+        }
 
         let mut has_card = current_player_deck.contains(&inputted_card);
 
