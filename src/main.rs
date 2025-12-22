@@ -37,49 +37,10 @@ fn main() {
 
     loop {
 
-        /*------------------------------*\
-        : game loop pseudocode:
-        : 
-        : set current player deck                                   ./
-        :   
-        : clear screen for new player                               ./
-        : 
-        : loop infinitely:                                          
-        : print out card on stack and whos turn it is               ./
-        : tell them their deck                                      ./
-        : 
-        : check if they have a card that matches the stack          ./
-        : while they dont then                                      ./
-        :   tell them they need to pull a card                      ./
-        :   pull new cards until they get a card that matches       ./
-        :   
-        : ask them what card they would like to play                ./
-        : 
-        : check if they have the card                               ./
-        : if they do                                                ./
-        :   check if the card matches                               ./
-        :   if it does                                              ./
-        :       change the stack to that card                       
-        :       remove that card from their deck                    
-        :   if it doesnt                                            ./
-        :       tell them it doesnt match -> pick another one       ./
-        : if they dont have the card                                ./
-        :   tell them they dont have it                             ./
-        :   ask to input card                                       ./
-        : 
-        : check if someone has 0 cards
-        : if so
-        :   break out of loop and display winner 
-        : 
-        : change to other players turn                              ./
-        : 
-        : repeat (but for other person)                             ./
-        \*------------------------------*/
-
         /* clear screen (disable during development so i can see rust warnings) */
         //print!("\x1B[2J");
 
-        let mut current_player_deck: Vec<Card> = Vec::new();
+        let mut current_player_deck: Vec<crate::card_utils::Card> = Vec::new();
 
         if turn == 1 {
             current_player_deck = player1_deck.clone();
@@ -94,7 +55,7 @@ fn main() {
         /* print out info for the player */
         println!("This is the card on the stack: ");
         println!("{card_on_stack}");
-        display_utils::display_card(&card_on_stack);
+        card_on_stack.display_card();
 
         println!("\n\nIt is player {turn}'s turn!");
 
@@ -108,7 +69,7 @@ fn main() {
 
         /* check if they have a card that matches */
         for card in &current_player_deck {
-            if card_utils::does_card_match(&card, &card_on_stack) {
+            if card.does_card_match(&card_on_stack) {
                 /* must_pull is true by default until a matching card is found */
                 must_pull = false;
                 break;
@@ -132,18 +93,18 @@ fn main() {
 
             /* display stack */
             println!("This is the card on the stack: ");
-            display_utils::display_card(card_on_stack);
+            card_on_stack.display_card();
 
             /* tell them what they pulled */
             println!("\n\nYou pulled a {pulled_card}:");
-            display_utils::display_card(&pulled_card);
+            pulled_card.display_card();
 
             /* display deck again */
             println!("\nHere is your new deck: ");
             display_utils::display_player_deck(&current_player_deck);
 
             /* checking if the new card matches */ 
-            if card_utils::does_card_match(&pulled_card, &card_on_stack) {
+            if pulled_card.does_card_match(&card_on_stack) {
                 must_pull = false;
 
                 /* clear screen & display info */
@@ -151,14 +112,14 @@ fn main() {
 
                 /* tell them what they pulled */
                 println!("\n\nYou pulled a {pulled_card}:");
-                display_utils::display_card(&pulled_card);
+                pulled_card.display_card();
 
                 /* tell them it matches */
                 println!("You now have a card that matches!");
 
                 /* display new info */
                 println!("\nThis is the card on the stack: ");
-                display_utils::display_card(card_on_stack);
+                card_on_stack.display_card();
 
                 /* print out deck with new card */
                 println!("\nHere is your new deck: ");
@@ -181,19 +142,19 @@ fn main() {
 
         let inputted_card = Card {
             /* set color and number based on what user inputted */
-            color = raw_inputted_card.chars().nth(0).unwrap();
-            num = raw_inputted_card.chars().nth(1).unwrap();
-        }
+            color: raw_inputted_card.chars().nth(0).unwrap(), 
+            num: raw_inputted_card.chars().nth(1).unwrap(), 
+        };
 
         let mut has_card = current_player_deck.contains(&inputted_card);
 
         /* check if they have the card and ask again if they dont */
-        while !has_card || !card_utils::does_card_match(&inputted_card, &card_on_stack) {
+        while !has_card || !inputted_card.does_card_match(&card_on_stack) {
             /* clear screen & display new info */
             //print!("\x1B[2J");
 
             println!("\nThis is the card on the stack: ");
-            display_utils::display_card(card_on_stack.as_str());
+            card_on_stack.display_card();
 
             println!("\nHere is your new deck: ");
             display_utils::display_player_deck(&current_player_deck);
@@ -218,7 +179,7 @@ fn main() {
             has_card = current_player_deck.contains(&inputted_card);
 
             /* display message and break if they have a good card */
-            if has_card && card_utils::does_card_match(&inputted_card, &card_on_stack) {
+            if has_card && inputted_card.does_card_match(&card_on_stack) {
                 println!("\nThat card matches the stack! \n");
                 break; 
             }

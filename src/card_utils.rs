@@ -15,21 +15,21 @@ const INITIAL_DECK_SIZE: u8 = 3;
 
 /* create card */
 pub struct Card {
-    color: char,
-    number: char,
+    pub color: char,
+    pub number: char,
 }
 
 /* add functions relating to an individual card */
 impl Card {
     /* check if self matches other card */
-    fn does_card_match(&self, card: &Card) -> bool {
+    pub fn does_card_match(&self, card: &Card) -> bool {
         if self.color == card.color || self.number == card.number {
             return true;
         } else {return false;}
     }
     
     /* display a single given card with ascii */
-    fn display_card(&self) {
+    pub fn display_card(&self) {
         /* print out a card */
         println!("/-------\\ 
 |{}      | 
