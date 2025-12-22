@@ -13,7 +13,7 @@ const CARDS_PER_ROW: u8 = 7;
 \*--------------------------------*/
 
 /* display 1 text line of a row of cards */
-pub fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement: &str, row: u8) {
+pub fn display_line_of_cards(deck: &Vec<Card>, line_type: &str, info_placement: &str, row: u8) {
     /* setup variables necessary to display and have info about the card */
     let mut cards_left = deck.len() as u8;
     cards_left -= (row - 1) * CARDS_PER_ROW;
@@ -22,16 +22,17 @@ pub fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement
     let mut current_card = (row - 1) * CARDS_PER_ROW;
 
     /* loop while there are cards remaining until the (amount of cards in a row) have been printed */
-    while cards_left > 0 {
-        let (color, num) = card_utils::get_card_info(&deck[current_card as usize]);
-        
+    while cards_left > 0 {        
+
+        let card = &deck[current_card as usize];
+
         /* print out that type of line with the info it needs */ 
         if line_type == "num" && info_placement == "left" {
-            print!("|{num}      |  ");
+            print!("|{}      |  ", card.number);
         } else if line_type == "num" && info_placement == "right" {
-            print!("|      {num}|  ");
+            print!("|      {}|  ", card.number);
         } else if line_type == "color" {
-            print!("|   {color}   |  ");
+            print!("|   {}   |  ", card.color);
         } else if line_type == "none" {
             print!("|       |  ");
         } else if line_type == "top" {

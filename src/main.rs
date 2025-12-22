@@ -10,6 +10,7 @@
 
 /* bringing in necessary stuff */
 use std::io;
+use crate::card_utils::Card;
 
 mod card_utils;
 mod display_utils;
