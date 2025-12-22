@@ -181,6 +181,8 @@ fn main() {
 
         let inputted_card = Card {
             /* set color and number based on what user inputted */
+            color = raw_inputted_card.chars().nth(0).unwrap();
+            num = raw_inputted_card.chars().nth(1).unwrap();
         }
 
         let mut has_card = current_player_deck.contains(&inputted_card);
