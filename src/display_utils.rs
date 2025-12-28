@@ -1,6 +1,7 @@
 
 /* bring in card_utils */
 use crate::card_utils;
+use crate::card_utils::Card;
 
 /*--------------------------------*\
 : necessary constants
