@@ -144,7 +144,7 @@ fn main() {
         let mut inputted_card: String = String::new();
         io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
-        let inputted_card = inputted_card.trim().to_lowercase();
+        inputted_card = inputted_card.trim().to_lowercase();
 
         let mut has_card = current_player_deck.contains(&inputted_card);
 
@@ -170,10 +170,12 @@ fn main() {
             println!("Use format: colorNumber (ex: y5)");
 
             /* get player card choice */
-            let mut inputted_card: String = String::new();
+            inputted_card.clear();
             io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
-            let inputted_card = inputted_card.trim().to_lowercase();
+            inputted_card = inputted_card.trim().to_lowercase();
+
+            println!("{inputted_card}");
             
             /* check if player has card */
             has_card = current_player_deck.contains(&inputted_card);
@@ -184,6 +186,8 @@ fn main() {
                 break; 
             }
         }
+
+        println!("{inputted_card}");
 
         /* update stack and player deck */
         card_on_stack = inputted_card.clone();
