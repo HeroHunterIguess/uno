@@ -37,45 +37,6 @@ fn main() {
 
     loop {
 
-        /*------------------------------*\
-        : game loop pseudocode:
-        : 
-        : set current player deck                                   ./
-        :   
-        : clear screen for new player                               ./
-        : 
-        : loop infinitely:                                          
-        : print out card on stack and whos turn it is               ./
-        : tell them their deck                                      ./
-        : 
-        : check if they have a card that matches the stack          ./
-        : while they dont then                                      ./
-        :   tell them they need to pull a card                      ./
-        :   pull new cards until they get a card that matches       ./
-        :   
-        : ask them what card they would like to play                ./
-        : 
-        : check if they have the card                               ./
-        : if they do                                                ./
-        :   check if the card matches                               ./
-        :   if it does                                              ./
-        :       change the stack to that card                       
-        :       remove that card from their deck                    
-        :   if it doesnt                                            ./
-        :       tell them it doesnt match -> pick another one       ./
-        : if they dont have the card                                ./
-        :   tell them they dont have it                             ./
-        :   ask to input card                                       ./
-        : 
-        : check if someone has 0 cards
-        : if so
-        :   break out of loop and display winner 
-        : 
-        : change to other players turn                              ./
-        : 
-        : repeat (but for other person)                             ./
-        \*------------------------------*/
-
         /* clear screen (disable during development so i can see rust warnings) */
         //print!("\x1B[2J");
 
