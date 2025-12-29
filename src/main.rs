@@ -1,11 +1,11 @@
 /*------------------------------------------------*\
 : uno-like game
-: created by: Hero
+: created by: Hero/Raylee
 : 
 : this is a MAJOR work in progress !!
-: its not playable right now !!
+: i will add many more features to this later
 : 
-: some of this code prob isnt good im bad at rust 
+: yes ik this code is generally pretty messy 
 \*------------------------------------------------*/
 
 /* bringing in necessary stuff */
