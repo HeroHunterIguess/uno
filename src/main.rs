@@ -37,8 +37,8 @@ fn main() {
 
     loop {
 
-        /* clear screen (disable during development so i can see rust warnings) */
-        //print!("\x1B[2J");
+        /* clear screen */
+        print!("\x1B[2J");
 
         let mut current_player_deck: Vec<String> = Vec::new();
 
@@ -54,7 +54,6 @@ fn main() {
 
         /* print out info for the player */
         println!("This is the card on the stack: ");
-        println!("{card_on_stack}");
         display_utils::display_single_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
@@ -89,15 +88,15 @@ fn main() {
             current_player_deck.push(pulled_card.clone());
 
             /* clear screen */
-            //print!("\x1B[2J");
-
-            /* display stack */
-            println!("This is the card on the stack: ");
-            display_utils::display_single_card(card_on_stack.as_str());
+            print!("\x1B[2J");
 
             /* tell them what they pulled */
-            println!("\n\nYou pulled a {pulled_card}:");
+            println!("You pulled a {pulled_card}:");
             display_utils::display_single_card(&pulled_card);
+
+            /* display stack */
+            println!("\n\nThis is the card on the stack: ");
+            display_utils::display_single_card(card_on_stack.as_str());
 
             /* display deck again */
             println!("\nHere is your new deck: ");
@@ -110,7 +109,7 @@ fn main() {
                 /*------------------------------------------------*/
 
                 /* clear screen & display info */
-                //print!("\x1B[2J");
+                print!("\x1B[2J");
 
                 /* tell them what they pulled */
                 println!("\n\nYou pulled a {pulled_card}:");
@@ -151,7 +150,7 @@ fn main() {
         /* check if they have the card and ask again if they dont */
         while !has_card || !card_utils::does_card_match(&inputted_card, &card_on_stack) {
             /* clear screen & display new info */
-            //print!("\x1B[2J");
+            print!("\x1B[2J");
 
             println!("\nThis is the card on the stack: ");
             display_utils::display_single_card(card_on_stack.as_str());
@@ -174,8 +173,6 @@ fn main() {
             io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
             inputted_card = inputted_card.trim().to_lowercase();
-
-            println!("{inputted_card}");
             
             /* check if player has card */
             has_card = current_player_deck.contains(&inputted_card);
@@ -187,8 +184,6 @@ fn main() {
             }
         }
 
-        println!("{inputted_card}");
-
         /* update stack and player deck */
         card_on_stack = inputted_card.clone();
         card_utils::remove_card_from_deck(&mut current_player_deck, &card_on_stack);
@@ -197,8 +192,14 @@ fn main() {
         : display info at end of turn
         \*------------------------------*/
 
-        /* clear screen & display info */
-        //print!("\x1B[2J");
+        /* clear screen */
+        print!("\x1B[2J");
+
+        /* end game if someone has 0 cards */
+        if current_player_deck.len() == 0 {
+            println!("Congratulations, Player {turn} has won! \n");
+            break;
+        }
 
         /* update to next players turn */
         println!("It is now player {turn}'s turn! (enter anything to accept) ");
