@@ -1,4 +1,4 @@
-/* all the functions in this should be self explanatory */
+/* all the functions in here should be self explanatory */
 
 use rand::Rng;
 

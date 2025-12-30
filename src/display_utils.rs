@@ -107,5 +107,11 @@ pub fn display_general_info(pulled_card: &String, card_on_stack: &String, curren
 
 /* display general game info & how to play before game starts */
 pub fn display_how_to_play() {
-    println!("How to play: \n");   
+    /* clear screen */
+    print!("\x1B[2J");
+
+    /* display info */
+    println!("How to play: \n");
+
+    println!("Enter anything to continue...");
 }

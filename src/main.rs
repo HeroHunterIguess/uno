@@ -19,30 +19,34 @@ mod display_utils;
 \*------------------------------*/
 
 fn main() {
-    /* initializating both players decks */
+    /* initializating game control variables & decks */
     let mut player1_deck = card_utils::generate_deck();
     let mut player2_deck = card_utils::generate_deck();
 
     let mut turn = 1;
 
+    let mut must_pull = true;
+
     /* setup the stack of cards with a random card on top */ 
     let mut card_on_stack = card_utils::pull_card();
-
-    /* initializing random variables */
-    let mut must_pull = true;
 
     /*------------------------------*\
     : Display HTP before game starts
     \*------------------------------*/
 
+    /* clear screen */
+    print!("\x1B[2J");
+
     display_utils::display_how_to_play();
+
+    let mut input: String = String::new();
+    io::stdin().read_line(&mut input).expect("failed to take input");
 
     /*------------------------------*\
     : start main game logic loop
     \*------------------------------*/
 
     loop {
-
         /* clear screen */
         print!("\x1B[2J");
 
@@ -85,8 +89,8 @@ fn main() {
         while must_pull == true {
             /* get user to accept pulling card */
             println!("You need to pull for a card! (enter anything to accept) ");
-            let mut input: String = String::new();
 
+            let mut input: String = String::new();
             io::stdin().read_line(&mut input).expect("failed to take input");
             
             /* pulling a card */
