@@ -1,7 +1,5 @@
-# uno-like recreation
-## a (work in progress) uno-like game
+# Blazing 10s, An Uno-like game
+## This game is a work in progress!
 
-not much to this its a pretty small project just recreating uno in rust
-
-right now its not even playable i have alot more to do
-
+There is not much to this its a pretty small project. 
+This is just a recreation of uno in rust, with some new and different things that may not be in tradional Uno.
