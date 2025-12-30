@@ -88,3 +88,20 @@ pub fn display_player_deck(deck: &Vec<String>) {
         card_row += 1;
     }
 }
+
+pub fn display_general_info(pulled_card: &String, card_on_stack: &String, current_player_deck: &Vec<String>) {
+    /* clear screen */
+    print!("\x1B[2J");
+
+    /* tell them what they pulled */
+    println!("You pulled a {pulled_card}:");
+    display_single_card(&pulled_card);
+
+    /* display stack */
+    println!("\n\nThis is the card on the stack: ");
+    display_single_card(&card_on_stack);
+
+    /* display deck again */
+    println!("\nHere is your new deck: ");
+    display_player_deck(&current_player_deck);
+}

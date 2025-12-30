@@ -38,7 +38,6 @@ pub fn generate_deck() -> Vec<String> {
     /* initializing and creating deck */
     let mut deck: Vec<String> = Vec::new();
     while deck.len() < INITIAL_DECK_SIZE.into() {
-
         /* adding a single card */
         deck.push(pull_card());
     }
@@ -59,6 +58,7 @@ pub fn does_card_match(card_1: &String, card_2: &String) -> bool {
 
 pub fn remove_card_from_deck(deck: &mut Vec<String>, card: &String) {
     let original_length = deck.len();
+    
     /* retain all cards that dont match the target and remove the target card */
     deck.retain(|card_being_checked| card_being_checked != card);
 

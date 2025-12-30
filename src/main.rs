@@ -87,46 +87,16 @@ fn main() {
             let pulled_card = card_utils::pull_card();
             current_player_deck.push(pulled_card.clone());
 
-            /* clear screen */
-            print!("\x1B[2J");
-
-            /* tell them what they pulled */
-            println!("You pulled a {pulled_card}:");
-            display_utils::display_single_card(&pulled_card);
-
-            /* display stack */
-            println!("\n\nThis is the card on the stack: ");
-            display_utils::display_single_card(card_on_stack.as_str());
-
-            /* display deck again */
-            println!("\nHere is your new deck: ");
-            display_utils::display_player_deck(&current_player_deck);
+            display_utils::display_general_info(&pulled_card, &card_on_stack, &current_player_deck);
 
             /* checking if the new card matches */ 
             if card_utils::does_card_match(&pulled_card, &card_on_stack) {
                 must_pull = false;
 
-                /*------------------------------------------------*/
-
-                /* clear screen & display info */
-                print!("\x1B[2J");
-
-                /* tell them what they pulled */
-                println!("\n\nYou pulled a {pulled_card}:");
-                display_utils::display_single_card(&pulled_card);
+                display_utils::display_general_info(&pulled_card, &card_on_stack, &current_player_deck);
 
                 /* tell them it matches */
-                println!("You now have a card that matches!");
-
-                /* display new info */
-                println!("\nThis is the card on the stack: ");
-                display_utils::display_single_card(card_on_stack.as_str());
-
-                /* print out deck with new card */
-                println!("\nHere is your new deck: ");
-                display_utils::display_player_deck(&current_player_deck);
-
-                /*------------------------------------------------*/
+                println!("\nYou now have a card that matches!\n");
 
                 break;
             }
