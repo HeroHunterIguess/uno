@@ -1,12 +1,12 @@
-/*------------------------------------------------*\
+/*------------------------------------------------------*\
 : uno-like game
 : created by: Hero/Raylee
 : 
-: this is a MAJOR work in progress !!
-: i will add many more features to this later
+: This is a work in progress !!
+: I will add many more features to this later
 : 
-: yes ik this code is generally pretty messy 
-\*------------------------------------------------*/
+: Yes, I know this code is generally pretty bad and messy 
+\*------------------------------------------------------*/
 
 /* bringing in necessary stuff */
 use std::io;
@@ -30,6 +30,12 @@ fn main() {
 
     /* initializing random variables */
     let mut must_pull = true;
+
+    /*------------------------------*\
+    : Display HTP before game starts
+    \*------------------------------*/
+
+    display_utils::display_how_to_play();
 
     /*------------------------------*\
     : start main game logic loop

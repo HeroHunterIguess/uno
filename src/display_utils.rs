@@ -1,3 +1,4 @@
+/* any functions without explanations should be self explanatory */
 
 /* bring in card_utils */
 use crate::card_utils;
@@ -12,7 +13,6 @@ const CARDS_PER_ROW: u8 = 7;
 : essential ascii display functions
 \*--------------------------------*/
 
-/* display a single given card with ascii */
 pub fn display_single_card(card: &str) {
     /* setup variables for the color and number based on the card */
     let color = card.chars().nth(0).unwrap();
@@ -67,7 +67,6 @@ pub fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement
     print!("\n");
 }
 
-/* display a full deck of cards */
 pub fn display_player_deck(deck: &Vec<String>) {
 
     let mut card_row = 1;
@@ -104,4 +103,9 @@ pub fn display_general_info(pulled_card: &String, card_on_stack: &String, curren
     /* display deck again */
     println!("\nHere is your new deck: ");
     display_player_deck(&current_player_deck);
+}
+
+/* display general game info & how to play before game starts */
+pub fn display_how_to_play() {
+    println!("How to play: \n");   
 }
