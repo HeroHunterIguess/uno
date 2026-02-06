@@ -1,6 +1,6 @@
 /*------------------------------------------------------*\
 : uno-like game
-: created by: Hero/Raylee
+: created by: Hero
 : 
 : This is a work in progress !!
 : I will add many more features to this later
