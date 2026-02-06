@@ -62,13 +62,11 @@ fn main() {
         : displaying info for the player
         \*------------------------------*/
 
-        /* print out info for the player */
         println!("This is the card on the stack: ");
         display_utils::display_single_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
 
-        //display players deck
         println!("\nYour deck is:");
         display_utils::display_player_deck(&current_player_deck);
 
