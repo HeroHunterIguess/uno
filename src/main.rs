@@ -103,7 +103,6 @@ fn main() {
 
                 display_utils::display_general_info(&pulled_card, &card_on_stack, &current_player_deck);
 
-                /* tell them it matches */
                 println!("\nYou now have a card that matches!\n");
 
                 break;
@@ -146,7 +145,6 @@ fn main() {
             println!("Enter the card you want to play: ");
             println!("Use format: colorNumber (ex: y5)");
 
-            /* get player card choice */
             inputted_card.clear();
             io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
@@ -170,7 +168,6 @@ fn main() {
         : display info at end of turn
         \*------------------------------*/
 
-        /* clear screen */
         print!("\x1B[2J");
 
         /* end game if someone has 0 cards */
