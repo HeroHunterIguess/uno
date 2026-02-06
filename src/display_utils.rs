@@ -18,7 +18,7 @@ pub fn display_single_card(card: &str) {
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap().to_digit(10).unwrap() as i32;
 
-    /* print out a card */
+    /* print out the card */
     println!("/-------\\ 
 |{num}      | 
 |       | 
@@ -68,12 +68,10 @@ pub fn display_line_of_cards(deck: &Vec<String>, line_type: &str, info_placement
 }
 
 pub fn display_player_deck(deck: &Vec<String>) {
-
     let mut card_row = 1;
 
     /* loop and display ascii for every card in the deck */
     while card_row <= deck.len().div_ceil(CARDS_PER_ROW.into()) { 
-        
         display_line_of_cards(deck, "top", "", card_row as u8);
         display_line_of_cards(deck, "num", "left", card_row as u8);
         display_line_of_cards(deck, "none", "", card_row as u8);
@@ -89,25 +87,20 @@ pub fn display_player_deck(deck: &Vec<String>) {
 }
 
 pub fn display_general_info(pulled_card: &String, card_on_stack: &String, current_player_deck: &Vec<String>) {
-    /* clear screen */
     print!("\x1B[2J");
 
-    /* tell them what they pulled */
     println!("You pulled a {pulled_card}:");
     display_single_card(&pulled_card);
 
-    /* display stack */
     println!("\n\nThis is the card on the stack: ");
     display_single_card(&card_on_stack);
 
-    /* display deck again */
     println!("\nHere is your new deck: ");
     display_player_deck(&current_player_deck);
 }
 
 /* display general game info & how to play before game starts */
 pub fn display_how_to_play() {
-    /* clear screen */
     print!("\x1B[2J");
 
     /* display info */
