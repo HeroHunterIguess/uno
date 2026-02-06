@@ -15,7 +15,6 @@ const INITIAL_DECK_SIZE: u8 = 2;
 \*--------------------------------*/
 
 pub fn get_card_info(card: &str) -> (char, char) {
-    /* get color and number of current card */
     let color = card.chars().nth(0).unwrap();
     let num = card.chars().nth(1).unwrap();
     return (color, num);
@@ -36,10 +35,8 @@ pub fn pull_card() -> String {
 }
 
 pub fn generate_deck() -> Vec<String> {
-    /* initializing and creating deck */
     let mut deck: Vec<String> = Vec::new();
     while deck.len() < INITIAL_DECK_SIZE.into() {
-        /* adding a single card */
         deck.push(pull_card());
     }
     return deck;
