@@ -57,10 +57,14 @@ pub fn does_card_match(card_1: &String, card_2: &String) -> bool {
 pub fn remove_card_from_deck(deck: &mut Vec<String>, card: &String) {
     let original_length = deck.len();
 
+    /* there may be an error with this from multiple match cards */
+    
     /* retain all cards that dont match the target and remove the target card */
     deck.retain(|card_being_checked| card_being_checked != card);
 
     if original_length == deck.len() {
         println!("DECK SIZE DIDNT CHANGE");
+    } else if original_length < deck.len()-1 {
+        println!("DECK SIZE CHANGED TOO MUCH");
     }
 }
