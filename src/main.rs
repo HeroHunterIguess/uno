@@ -3,7 +3,8 @@
 : created by: Hero
 : 
 : This is a work in progress !!
-: I will add many more features to this later
+: I will add many more features to this later, however
+: this is not actively being developed right now.
 : 
 : Yes, I know this code is generally pretty bad and messy 
 \*------------------------------------------------------*/
