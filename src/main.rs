@@ -3,8 +3,7 @@
 : created by: Hero
 : 
 : This is a work in progress !!
-: I will add many more features to this later, however
-: this is not actively being developed right now.
+: I will add many more features to this later
 : 
 : Yes, I know this code is generally pretty bad and messy 
 \*------------------------------------------------------*/
@@ -63,11 +62,13 @@ fn main() {
         : displaying info for the player
         \*------------------------------*/
 
+        /* print out info for the player */
         println!("This is the card on the stack: ");
         display_utils::display_single_card(card_on_stack.as_str());
 
         println!("\n\nIt is player {turn}'s turn!");
 
+        //display players deck
         println!("\nYour deck is:");
         display_utils::display_player_deck(&current_player_deck);
 
@@ -104,11 +105,18 @@ fn main() {
 
                 display_utils::display_general_info(&pulled_card, &card_on_stack, &current_player_deck);
 
+                /* tell them it matches */
                 println!("\nYou now have a card that matches!\n");
 
                 break;
             }
         }
+
+        // display uno if player has one card
+        if current_player_deck.len() == 1 {
+            println!("Uno!");
+        }
+
 
         /*------------------------------*\
         : get user to play a card
@@ -146,6 +154,7 @@ fn main() {
             println!("Enter the card you want to play: ");
             println!("Use format: colorNumber (ex: y5)");
 
+            /* get player card choice */
             inputted_card.clear();
             io::stdin().read_line(&mut inputted_card).expect("failed to take input");
 
@@ -169,6 +178,7 @@ fn main() {
         : display info at end of turn
         \*------------------------------*/
 
+        /* clear screen */
         print!("\x1B[2J");
 
         /* end game if someone has 0 cards */
